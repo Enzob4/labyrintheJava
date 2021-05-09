@@ -13,44 +13,46 @@ public class Utils {
     private static Random generateur=new Random((new Date().getTime()));
 
     /**
-     * A Faire (Quand Qui Statut)
+     * A Faire (09/05/2021 RK Finalisé)
      *
-     * MÃ©thode permettant de gÃ©nÃ©rer alÃ©atoirement un nombre entier.
+     * Méthode permettant de générer aléatoirement un nombre entier.
      *
-     * @param max Le nombre entier maximal pouvant Ãªtre retournÃ©.
+     * @param max Le nombre entier maximal pouvant être retourné©.
      * @return Un nombre entier compris entre 0 et max (inclus).
      */
     public static int genererEntier(int max){
-        // A Modifier !!!
-        return -1;
+        return generateur.nextInt(max + 1);
     }
+
     /**
-     * A Faire (Quand Qui Statut)
+     * A Faire (09/05/2021 RK EnCours)
      *
-     * MÃ©thode permettant de gÃ©nÃ©rer un tableau d'entiers dont la longueur longTab est donnÃ©e en paramÃ¨tre.
-     * Le tableau gÃ©nÃ©rÃ© doit contenir chaque entier compris entre 0 et longTab-1. La position de ces entiers
+     * Méthode permettant de générer un tableau d'entiers dont la longueur longTab est donnée en paramètres.
+     * Le tableau généré doit contenir chaque entier compris entre 0 et longTab-1. La position de ces entiers
      * dans le tableau doit Ãªtre alÃ©atoire.
      *
      * @param longTab La longueur du tableau.
      * @return Un tableau contenant les entiers 0,...,longTab-1 placÃ©s alÃ©atoirement dans le tableau.
      */
     public static int[] genereTabIntAleatoirement(int longTab){
-        int tab[]=null;
+        int[] tab = new int[longTab];
 
-        // A ComplÃ©ter !!!
+        for(int i=0; i<longTab; i++) {
+            tab[i] = genererEntier(longTab-1);
+        }
 
         return tab;
     }
+
     /**
      * Programme testant la mÃ©thode genereTabIntAleatoirement.
      * @param args arguments du programme
      */
     public static void main(String[] args) {
         // Un petit test ...
-        int tab[]=genereTabIntAleatoirement(18);
-        for (int i=0;i<tab.length;i++)
+        int[] tab =genereTabIntAleatoirement(18);
+        for (int i=0; i<tab.length; i++)
             System.out.print(tab[i]+" ");
-
     }
 
 }

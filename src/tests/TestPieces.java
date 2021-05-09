@@ -1,7 +1,10 @@
 package tests;
 
+import composants.Utils;
+
 public class TestPieces {
     public static void main(String[] args) {
-        System.out.println("");
+        int[] tabl = Utils.genereTabIntAleatoirement(5);
+        System.out.println(tabl[2]);
     }
 }
