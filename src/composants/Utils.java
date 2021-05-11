@@ -25,7 +25,7 @@ public class Utils {
     }
 
     /**
-     * A Faire (09/05/2021 RK EnCours)
+     * A Faire (11/05/2021 RK Finalisee)
      *
      * Méthode permettant de générer un tableau d'entiers dont la longueur longTab est donnée en paramètres.
      * Le tableau généré doit contenir chaque entier compris entre 0 et longTab-1. La position de ces entiers
@@ -38,9 +38,12 @@ public class Utils {
         int[] tab = new int[longTab];
 
         for(int i=0; i<longTab; i++) {
-            tab[i] = genererEntier(longTab-1);
+            int x = genererEntier(longTab-1);
+            while(tab[x] != 0) {
+                x = genererEntier(longTab-1);
+            }
+            tab[x] = i;
         }
-
         return tab;
     }
 
