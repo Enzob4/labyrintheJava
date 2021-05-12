@@ -8,9 +8,9 @@ package composants;
 public class PieceM2 extends Piece {
 
     /**
-     * A Faire (12/05/2021 RK Finalisee)
+     * A Faire (12/05/2021 OL Finalisee)
      *
-     * Constructeur permettant de construire une piÃ¨ce de modÃ¨le 2 et d'orientation 0.
+     * Constructeur permettant de construire une pièce de modèle 2 et d'orientation 0.
      */
     public PieceM2() {
         // A Modifier !!!
@@ -19,12 +19,11 @@ public class PieceM2 extends Piece {
     /**
      * A Faire (12/05/2021 RK Finalisee)
      *
-     * MÃ©thode permettant de crÃ©er une copie de la piÃ¨ce (un nouvelle objet Java).
-     * @return Une copie de la piÃ¨ce.
+     * Méthode permettant de crÃ©er une copie de la pièce (un nouvel objet Java).
+     * @return Une copie de la pièce.
      */
     public Piece copy(){
         Piece piece= new PieceM2();
-        // A ComplÃ©ter
         piece.setOrientation(getOrientationPiece());
         return piece;
     }
