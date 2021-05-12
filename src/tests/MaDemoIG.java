@@ -13,7 +13,6 @@ public class MaDemoIG {
                 "Cliquez pour continuer",
                 ""
         };
-
         IG.creerFenetreJeu("Ekip", nbJoueurs);
 
         // passage de toutes les pieces du plateau en (2, 0)
