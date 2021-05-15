@@ -19,7 +19,7 @@ public class PieceM2 extends Piece {
     /**
      * A Faire (12/05/2021 RK Finalisee)
      *
-     * Méthode permettant de crÃ©er une copie de la pièce (un nouvel objet Java).
+     * Méthode permettant de creer une copie de la pièce (un nouvel objet Java).
      * @return Une copie de la pièce.
      */
     public Piece copy(){

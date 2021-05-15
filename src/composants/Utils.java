@@ -32,7 +32,7 @@ public class Utils {
      * dans le tableau doit Ãªtre alÃ©atoire.
      *
      * @param longTab La longueur du tableau.
-     * @return Un tableau contenant les entiers 0,...,longTab-1 placÃ©s alÃ©atoirement dans le tableau.
+     * @return Un tableau contenant les entiers 0,...,longTab-1 placÃ©s  dans le tableau.
      */
     public static int[] genereTabIntAleatoirement(int longTab){
         int[] tab = new int[longTab];
@@ -48,7 +48,7 @@ public class Utils {
     }
 
     /**
-     * Programme testant la mÃ©thode genereTabIntAleatoirement.
+     * Programme testant la Methode genereTabIntAleatoirement.
      * @param args arguments du programme
      */
     public static void main(String[] args) {
