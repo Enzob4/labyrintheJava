@@ -1,5 +1,7 @@
 package composants;
 
+import java.util.Arrays;
+
 /**
  *
  * Cette classe permet de representer chacun des objets du jeu.
@@ -29,7 +31,7 @@ public class Objet {
 
     /**
      *
-     * A Faire (Quand Qui Statut)
+     * A Faire (15/05/2021 RK Finalisee)
      *
      * Methode permettant de generer un tableau contenant les 18 objets du jeu.
      * Les objets seront postionnees aleatoirement sur le plateau.  Deux objets ne pourront pas etre sur une meme case (meme ligne et meme colonne).
@@ -37,23 +39,43 @@ public class Objet {
      * @return Un tableau de 18 objets initialises pour une partie du jeu. Chaque objet a une position generee. Les positions sont differentes pour deux objets distincts.
      *
      */
-    public static Objet[] nouveauxObjets(){ // PAS FINI (pos differentes)
-        Objet[] objets= new Objet[18];
+    public static Objet[] nouveauxObjets() {
+        Objet[] objets = new Objet[18];
+        int[][] positions = new int[18][2];
+        int nbPos = 0;
+
         for(int i=0; i<18; i++) {
-            int posL = Utils.genererEntier(6);
-            int posX = Utils.genererEntier(6);
             Objet objet = new Objet(i);
-            objet.positionneObjet(posL, posX);
             objet.surPlateau = true;
+
+            int posX = Utils.genererEntier(6);
+            int posY = Utils.genererEntier(6);
+
+            while(objet.positionExiste(positions, new int[]{posX, posY})) {
+                posX = Utils.genererEntier(6);
+                posY = Utils.genererEntier(6);
+            }
+            positions[nbPos] = new int[]{posX, posY};
+            nbPos++;
+            objet.positionneObjet(posX, posY);
             objets[i] = objet;
         }
         return objets;
     }
 
+    private boolean positionExiste(int[][] positions, int[] pos) {
+        for(int[] position : positions) {
+            if(position[0] == pos[0] && position[1] == pos[1]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     /**
      *
-     * A Faire (Quand Qui Statut)
+     * A Faire (17/05 WC Finalisee)
      *
      * Methode retournant le numero de l'objet.
      *
@@ -66,7 +88,7 @@ public class Objet {
 
     /**
      *
-     * A Faire (Quand Qui Statut)
+     * A Faire (17/05 EB Finalisee)
      *
      * Methode retournant le numero de la ligne sur laquelle se trouve l'objet.
      *
@@ -78,7 +100,7 @@ public class Objet {
 
     /**
      *
-     * A Faire (Quand Qui Statut)
+     * A Faire (17/05 EB Finalisee)
      *
      * Methode retournant le numero de la colonne sur laquelle se trouve l'objet.
      *
@@ -91,7 +113,7 @@ public class Objet {
 
     /**
      *
-     * A Faire (Quand Qui Statut)
+     * A Faire (17/05 WC Finalisee)
      *
      * Methode permettant de positionner l'objet sur une ligne et une colonne donnÃ©es en parametre.
      *
@@ -105,7 +127,7 @@ public class Objet {
 
     /**
      *
-     * A Faire (Quand Qui Statut)
+     * A Faire (17/05 RK Finalisee)
      *
      * Methode permettant d'enlever l'objet du plateau.
      *
@@ -118,7 +140,7 @@ public class Objet {
 
     /**
      *
-     * A Faire (Quand Qui Statut)
+     * A Faire (17/05 OL Finalisee)
      *
      * Methode indiquant si l'objet est sur le plateau au non.
      *

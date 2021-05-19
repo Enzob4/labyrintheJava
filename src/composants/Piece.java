@@ -114,11 +114,11 @@ abstract public class Piece {
         Piece[] pieces = new Piece[50];
         for(int i=0; i<20; i++) {
             pieces[i] = new PieceM0();
-            pieces[i].setOrientation(Utils.genererEntier(1));
+            pieces[i].setOrientation(Utils.genererEntier(3));
         }
         for(int i=20; i<32; i++) {
             pieces[i] = new PieceM1();
-            pieces[i].setOrientation(Utils.genererEntier(3));
+            pieces[i].setOrientation(Utils.genererEntier(1));
         }
         for(int i=32; i<50; i++) {
             pieces[i] = new PieceM2();
