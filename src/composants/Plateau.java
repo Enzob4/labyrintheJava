@@ -1,5 +1,7 @@
 package composants;
 
+import java.util.ArrayList;
+
 /**
  * Cette classe permet de gÃ©rer un plateau de jeu constituÃ© d'une grille de piÃ¨ces (grille de 7 lignes sur 7 colonnes).
  *
@@ -146,8 +148,8 @@ public class Plateau {
         Piece piece = getPiece(posLigCaseDep, posColCaseDep);
         Piece pieceArr = getPiece(posLigCaseArr, posColCaseArr);
 
-        int posLig = posLigCaseDep; int lastPosLig = posLigCaseDep;
-        int posCol= posColCaseDep; int lastPosCol = posColCaseDep;
+        int posLig = posLigCaseDep;
+        int posCol= posColCaseDep;
         Piece lastPiece = getPiece(posLig, posCol);
         int nbCase = 0;
         if(piece == pieceArr) {
@@ -160,12 +162,10 @@ public class Plateau {
         while(piece != pieceArr) {
 
             if(passageEntreCases(posLig, posCol, posLig-1, posCol) && lastPiece != getPiece(posLig-1, posCol)){
-                lastPosLig = posLig;
                 lastPiece = getPiece(posLig, posCol);
                 posLig--;
 
             } else if(passageEntreCases(posLig, posCol, posLig, posCol+1) && lastPiece != getPiece(posLig, posCol+1)) {
-                lastPosCol = posCol;
                 lastPiece = getPiece(posLig, posCol);
                 posCol++;
 

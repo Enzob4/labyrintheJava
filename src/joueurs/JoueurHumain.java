@@ -62,7 +62,4 @@ public class JoueurHumain extends Joueur {
             nouveauJoueur.recupererObjet();
         return nouveauJoueur;
     }
-
-
-
 }

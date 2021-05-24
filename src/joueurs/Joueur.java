@@ -33,7 +33,13 @@ public abstract class Joueur {
      * @param posColonnePlateau La colonne du plateau sur laquelle est positionnÃ©s le joueur.
      */
     public Joueur(int numJoueur,String nomJoueur, int numeroImagePersonnage,int posLignePlateau,int posColonnePlateau) {
-        // A ComplÃ©ter
+        this.numJoueur = numJoueur;
+        this.nomJoueur = nomJoueur;
+        this.numeroImagePersonnage = numeroImagePersonnage;
+        this.posLigne = posLignePlateau;
+        this.posColonne = posColonnePlateau;
+        this.objetsJoueur = null;
+        this.nombreObjetsRecuperes = 0;
     }
 
     /**
@@ -85,7 +91,7 @@ public abstract class Joueur {
      * @return Le nombre d'objets rÃ©cupÃ©rÃ©s par le joueur.
      */
     public int getNombreObjetsRecuperes() {
-        return -1; // A Modifier
+        return nombreObjetsRecuperes;
     }
 
 
@@ -96,7 +102,7 @@ public abstract class Joueur {
      * @return  La ligne du plateau sur laquelle se trouve le joueur.
      */
     public int getPosLigne() {
-        return -1; // A Modifier
+        return posLigne;
     }
 
 
@@ -107,7 +113,7 @@ public abstract class Joueur {
      * @return La colonne du plateau sur laquelle se trouve le joueur.
      */
     public int getPosColonne() {
-        return -1; // A Modifier
+        return posColonne;
     }
 
 
@@ -118,7 +124,7 @@ public abstract class Joueur {
      * @return Le nom du joueur.
      */
     public String getNomJoueur() {
-        return null; // A Modifier
+        return nomJoueur;
     }
 
     /**
@@ -128,7 +134,7 @@ public abstract class Joueur {
      * @return Le numÃ©ro de l'image reprÃ©sentant le joueur.
      */
     public int getNumeroImagePersonnage() {
-        return -1; // A Modifier
+        return numeroImagePersonnage;
     }
 
     /**
@@ -140,7 +146,10 @@ public abstract class Joueur {
      * @param objetsARecuperer Un tableau contenant les objets Ã  rÃ©cupÃ©rer dans l'ordre.
      */
     public void setObjetsJoueur(Objet objetsARecuperer[]){
-        // A ComplÃ©ter
+        this.objetsJoueur = new Objet[objetsARecuperer.length];
+        for(int i=0; i<objetsARecuperer.length; i++) {
+            this.objetsJoueur[i] = objetsARecuperer[i];
+        }
     }
 
     /**
@@ -152,11 +161,7 @@ public abstract class Joueur {
      * @return Un tableau d'Objet correspondant aux objets Ã  rÃ©cupÃ©rer du joueur.
      */
     public Objet[] getObjetsJoueur(){
-        Objet resultat[]=null;
-
-        // A ComplÃ©ter
-
-        return resultat;
+        return objetsJoueur;
     }
 
 
@@ -169,7 +174,7 @@ public abstract class Joueur {
      * @return Le prochain objet Ã  rÃ©cupÃ©rer par le joueur.
      */
     public Objet getProchainObjet(){
-        return null; // A Modifier
+        return objetsJoueur[nombreObjetsRecuperes];
     }
 
     /**
@@ -179,7 +184,7 @@ public abstract class Joueur {
      * MÃ©thode permettant de rÃ©cupÃ©rer un nouvel objet. Cette mÃ©thode incrÃ©mente simplement de 1 le nombre d'objets qui ont Ã©tÃ© rÃ©cupÃ©rÃ©s.
      */
     public void recupererObjet(){
-        // A ComplÃ©ter
+        nombreObjetsRecuperes++;
     }
 
 
@@ -191,7 +196,7 @@ public abstract class Joueur {
      * @return Le numÃ©ro du joueur.
      */
     public int getNumJoueur(){
-        return -1; // A Modifier
+        return numJoueur;
     }
 
     /**
@@ -203,7 +208,7 @@ public abstract class Joueur {
      * @param posColonne La colonne de la nouvelle position.
      */
     public void setPosition(int posLigne,int posColonne) {
-        // A ComplÃ©ter
+        this.posLigne = posLigne; this.posColonne = posColonne;
     }
 
     /**
@@ -264,6 +269,4 @@ public abstract class Joueur {
      * @return Une copie du joueur.
      */
     public abstract Joueur copy(Objet objets[]);
-
-
 }
