@@ -4,6 +4,8 @@ import composants.Piece;
 import composants.Plateau;
 import grafix.interfaceGraphique.IG;
 
+import java.util.Arrays;
+
 public class TestPlateau {
     public static void main(String[] args) {
         Object[] parametres = IG.saisirParametres();
@@ -28,5 +30,12 @@ public class TestPlateau {
         IG.changerPieceHorsPlateau(pieceHorsPlateau.getModelePiece(), pieceHorsPlateau.getOrientationPiece());
         IG.miseAJourAffichage();
         IG.attendreClic();
+        for(int i=0; i<7; i++) {
+            for(int j=0; j<7; j++) {
+                if(plateau.calculeChemin(3, 3, i, j) != null) {
+                    System.out.println("Chemin entre (3,3) et ("+i+","+j+") : "+ Arrays.deepToString(plateau.calculeChemin(3, 3, i, j)));
+                }
+            }
+        }
     }
 }

@@ -109,17 +109,17 @@ public class Plateau {
         int distLigne = posLigCase1 - posLigCase2;
         int distCol = posColCase1 - posColCase2;
         if(distLigne < 0) {
-            // p1 a gauche ; p2 a droite
-            return p1.getPointEntree(1) && p2.getPointEntree(3);
-        } else if(distLigne > 0) {
-            // p1 a droite ; p2 a gauche
-            return p1.getPointEntree(3) && p2.getPointEntree(1);
-        } else if (distCol < 0) {
             // p1 en haut ; p2 en bas
             return p1.getPointEntree(2) && p2.getPointEntree(0);
-        } else {
+        } else if(distLigne > 0) {
             // p1 en bas ; p2 en haut
             return p1.getPointEntree(0) && p2.getPointEntree(2);
+        } else if (distCol < 0) {
+            // p1 a gauche ; p2 a droite
+            return p1.getPointEntree(1) && p2.getPointEntree(3);
+        } else {
+            // p1 a droite ; p2 a gauche
+            return p1.getPointEntree(3) && p2.getPointEntree(1);
         }
     }
 
@@ -142,7 +142,48 @@ public class Plateau {
      * @return null si il n'existe pas de chemin entre les deux case, un chemin sinon.
      */
     public int[][] calculeChemin(int posLigCaseDep,int posColCaseDep,int posLigCaseArr,int posColCaseArr){
-        int resultat[][]=null;
+        int[][] resultat = new int[49][2];
+        Piece piece = getPiece(posLigCaseDep, posColCaseDep);
+        Piece pieceArr = getPiece(posLigCaseArr, posColCaseArr);
+
+        int posLig = posLigCaseDep; int lastPosLig = posLigCaseDep;
+        int posCol= posColCaseDep; int lastPosCol = posColCaseDep;
+        Piece lastPiece = getPiece(posLig, posCol);
+        int nbCase = 0;
+        if(piece == pieceArr) {
+            return new int[][]{{posLigCaseDep, posColCaseDep}};
+        } else{
+            resultat[0] = new int[]{posLig, posCol};
+            nbCase++;
+        }
+
+        while(piece != pieceArr) {
+
+            if(passageEntreCases(posLig, posCol, posLig-1, posCol) && lastPiece != getPiece(posLig-1, posCol)){
+                lastPosLig = posLig;
+                lastPiece = getPiece(posLig, posCol);
+                posLig--;
+
+            } else if(passageEntreCases(posLig, posCol, posLig, posCol+1) && lastPiece != getPiece(posLig, posCol+1)) {
+                lastPosCol = posCol;
+                lastPiece = getPiece(posLig, posCol);
+                posCol++;
+
+            } else if(passageEntreCases(posLig, posCol, posLig+1, posCol) && lastPiece != getPiece(posLig+1, posCol)) {
+                lastPiece = getPiece(posLig, posCol);
+                posLig++;
+
+            } else if(passageEntreCases(posLig, posCol, posLig, posCol-1) && lastPiece != getPiece(posLig, posCol-1)) {
+                lastPiece = getPiece(posLig, posCol);
+                posCol--;
+
+            } else {
+                return null;
+            }
+            piece = getPiece(posLig, posCol);
+            resultat[nbCase] = new int[]{posLig, posCol};
+            nbCase++;
+        }
         return resultat;
     }
 
