@@ -106,7 +106,7 @@ public class Plateau {
      */
     private boolean passageEntreCases(int posLigCase1,int posColCase1,int posLigCase2,int posColCase2){
         if(!casesAdjacentes(posLigCase1, posColCase1, posLigCase2, posColCase2)) return false;
-        Piece p1 = getPiece(posLigCase1, posColCase2);
+        Piece p1 = getPiece(posLigCase1, posColCase1);
         Piece p2 = getPiece(posLigCase2, posColCase2);
         int distLigne = posLigCase1 - posLigCase2;
         int distCol = posColCase1 - posColCase2;
@@ -119,9 +119,12 @@ public class Plateau {
         } else if (distCol < 0) {
             // p1 a gauche ; p2 a droite
             return p1.getPointEntree(1) && p2.getPointEntree(3);
-        } else {
+        } else if(distCol > 0){
             // p1 a droite ; p2 a gauche
             return p1.getPointEntree(3) && p2.getPointEntree(1);
+        } else {
+            System.out.println("erreur");
+            return false;
         }
     }
 
@@ -158,7 +161,6 @@ public class Plateau {
             resultat[0] = new int[]{posLig, posCol};
             nbCase++;
         }
-
         while(piece != pieceArr) {
 
             if(passageEntreCases(posLig, posCol, posLig-1, posCol) && lastPiece != getPiece(posLig-1, posCol)){
@@ -184,7 +186,9 @@ public class Plateau {
             resultat[nbCase] = new int[]{posLig, posCol};
             nbCase++;
         }
-        return resultat;
+        int[][] res = new int[nbCase][2];
+        System.arraycopy(resultat, 0, res, 0, nbCase);
+        return res;
     }
 
     /**

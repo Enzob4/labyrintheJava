@@ -30,6 +30,8 @@ public class TestPlateau {
         IG.changerPieceHorsPlateau(pieceHorsPlateau.getModelePiece(), pieceHorsPlateau.getOrientationPiece());
         IG.miseAJourAffichage();
         IG.attendreClic();
+        System.out.println("La liste des chemins trouvés à partir de la case (3,3) :");
+        System.out.println();
         for(int i=0; i<7; i++) {
             for(int j=0; j<7; j++) {
                 if(plateau.calculeChemin(3, 3, i, j) != null) {
@@ -37,5 +39,7 @@ public class TestPlateau {
                 }
             }
         }
+
+
     }
 }

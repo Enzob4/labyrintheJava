@@ -13,7 +13,6 @@ public class PieceM1 extends Piece {
      * Constructeur permettant de construire une pièce de modèle 1 et d'orientation 0.
      */
     public PieceM1() {
-        // A Modifier !!!
         super(1,true,false,true,false);
     }
     /**

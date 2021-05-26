@@ -67,8 +67,34 @@ abstract public class Piece {
      * @param orientationPiece Un entier correspondant Ã  la nouvelle orientation de la pièce.
      */
     public void setOrientation(int orientationPiece){
-        for(int i=0; i<orientationPiece-1; i++)
-            rotation();
+        if(this.orientationPiece == orientationPiece) return;
+        int diffRotation =  this.orientationPiece - orientationPiece;
+        if(diffRotation < 0) {
+            diffRotation = -diffRotation;
+            for(int i=0; i<diffRotation; i++)
+                rotation();
+        } else {
+            if(this.orientationPiece == 1 && orientationPiece == 0) {
+                for(int i=0; i<3; i++)
+                    rotation();
+            } else if(this.orientationPiece == 2 && orientationPiece == 0) {
+                for (int i = 0; i < 2; i++)
+                    rotation();
+            } else if(this.orientationPiece == 2 && orientationPiece == 1) {
+                for(int i=0; i<3; i++)
+                    rotation();
+            } else if(this.orientationPiece == 3 && orientationPiece == 0) {
+                rotation();
+            } else if(this.orientationPiece == 3 && orientationPiece == 1) {
+                for(int i = 0; i < 2; i++)
+                    rotation();
+            } else {
+                for(int i=0; i<3; i++)
+                    rotation();
+            }
+        }
+        /*for(int i=0; i<orientationPiece-1; i++)
+            rotation();*/
     }
 
     /**

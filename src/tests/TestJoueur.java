@@ -37,12 +37,28 @@ public class TestJoueur {
             IG.placerJoueurSurPlateau(joueurs[i].getNumJoueur(), joueurs[i].getPosLigne(), joueurs[i].getPosColonne());
         }
         IG.afficherMessage(message);
-        IG.attendreClic();
         IG.rendreVisibleFenetreJeu();
+        IG.attendreClic();
+        for(int i=0; i<nbJoueurs;i++) {
+            Joueur joueur = joueurs[i];
+            message = new String[]{
+                    "",
+                    "Au tour de "+joueur.getNomJoueur(),
+                    "Selectionner une case ...",
+                    ""
+            };
+            IG.afficherMessage(message);
+            IG.miseAJourAffichage();
+            int[] caseArrivee = joueur.choisirCaseArrivee(null);
+            while(plateau.calculeChemin(joueur.getPosLigne(), joueur.getPosColonne(), caseArrivee[0], caseArrivee[1]) == null)
+                caseArrivee = joueur.choisirCaseArrivee(null);
 
-
-        // deplacement joueurs a faire avec Plateau.calculeChemin
-
-
+            IG.placerJoueurSurPlateau(i, caseArrivee[0], caseArrivee[1]);
+            for(int[] cases : plateau.calculeChemin(joueur.getPosLigne(), joueur.getPosColonne(), caseArrivee[0], caseArrivee[1])){
+                IG.placerBilleSurPlateau(cases[0], cases[1], 1, 1, 2);
+            }
+            IG.miseAJourAffichage();
+        }
+        IG.attendreClic();
     }
 }
