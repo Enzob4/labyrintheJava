@@ -33,9 +33,12 @@ public class ElementsPartie {
      * @param joueurs Les joueurs de la partie. Les objets des joueurs ne sont pas encore attribuÃ©s (c'est au constructeur de le faire).
      */
     public ElementsPartie(Joueur[] joueurs) {
-
-        // A ComplÃ©ter
-
+        this.joueurs = joueurs;
+        this.objets = Objet.nouveauxObjets();
+        this.plateau = new Plateau();
+        this.pieceLibre = plateau.placerPiecesAleatoirement();
+        this.nombreJoueurs = joueurs.length;
+        this.attribuerObjetsAuxJoueurs();
     }
 
     /**
@@ -47,11 +50,11 @@ public class ElementsPartie {
      * @param pieceLibre La piÃ¨ce libre (la piÃ¨ce hors plateau).
      */
     public ElementsPartie(Joueur[] joueurs,Objet[] objets,Plateau plateau,Piece pieceLibre) {
-        this.joueurs=joueurs;
-        nombreJoueurs=joueurs.length;
-        this.objets=objets;
-        this.plateau=plateau;
-        this.pieceLibre=pieceLibre;
+        this.joueurs = joueurs;
+        nombreJoueurs = joueurs.length;
+        this.objets = objets;
+        this.plateau = plateau;
+        this.pieceLibre = pieceLibre;
     }
 
     /**
@@ -60,9 +63,59 @@ public class ElementsPartie {
      * MÃ©thode permettant d'attribuer les objets aux diffÃ©rents joueurs de maniÃ¨re alÃ©atoire.
      */
     private void attribuerObjetsAuxJoueurs(){
+        Objet[] objets = Objet.nouveauxObjets();
+        if(nombreJoueurs == 2) {
+            Objet[] objetsJ1 = new Objet[9];
+            Objet[] objetsJ2 = new Objet[9];
 
-        // A ComplÃ©ter
+            int x = Utils.genererEntier(17);
+            for(int i=0; i<9; i++) {
+                while(objets[x] == null) {
+                    x = Utils.genererEntier(17);
+                }
+                objetsJ1[i] = objets[x];
+                objets[x] = null;
+            }
+            for(int i=0; i<9; i++) {
+                while(objets[x] == null) {
+                    x = Utils.genererEntier(17);
+                }
+                objetsJ2[i] = objets[x];
+                objets[x] = null;
+            }
+            joueurs[0].setObjetsJoueur(objetsJ1);
+            joueurs[1].setObjetsJoueur(objetsJ2);
+        } else {
+            Objet[] objetsJ1 = new Objet[6];
+            Objet[] objetsJ2 = new Objet[6];
+            Objet[] objetsJ3 = new Objet[6];
 
+            int x = Utils.genererEntier(17);
+            for(int i=0; i<6; i++) {
+                while(objets[x] == null) {
+                    x = Utils.genererEntier(17);
+                }
+                objetsJ1[i] = objets[x];
+                objets[x] = null;
+            }
+            for(int i=0; i<6; i++) {
+                while(objets[x] == null) {
+                    x = Utils.genererEntier(17);
+                }
+                objetsJ2[i] = objets[x];
+                objets[x] = null;
+            }
+            for(int i=0; i<6; i++) {
+                while(objets[x] == null) {
+                    x = Utils.genererEntier(17);
+                }
+                objetsJ3[i] = objets[x];
+                objets[x] = null;
+            }
+            joueurs[0].setObjetsJoueur(objetsJ1);
+            joueurs[1].setObjetsJoueur(objetsJ2);
+            joueurs[2].setObjetsJoueur(objetsJ3);
+        }
     }
 
     /**
@@ -72,7 +125,7 @@ public class ElementsPartie {
      * @return Les joueurs de la partie.
      */
     public Joueur[] getJoueurs() {
-        return null; // A Modifier
+        return this.joueurs;
     }
 
 
@@ -83,7 +136,7 @@ public class ElementsPartie {
      * @return Les objets de la partie.
      */
     public Objet[] getObjets() {
-        return null; // A Modifier
+        return this.objets; // A Modifier
     }
 
 
@@ -94,7 +147,7 @@ public class ElementsPartie {
      * @return Le plateau de piÃ¨ces.
      */
     public Plateau getPlateau() {
-        return null; // A Modifier
+        return this.plateau;
     }
 
 
@@ -105,7 +158,7 @@ public class ElementsPartie {
      * @return La piÃ¨ce libre.
      */
     public Piece getPieceLibre() {
-        return null; // A Modifier
+        return this.pieceLibre;
     }
 
 
@@ -116,7 +169,7 @@ public class ElementsPartie {
      * @return Le nombre de joueurs.
      */
     public int getNombreJoueurs() {
-        return -1; // A Modifier
+        return this.nombreJoueurs;
     }
 
 
@@ -128,7 +181,37 @@ public class ElementsPartie {
      * @param choixEntree L'entrÃ©e choisie pour rÃ©aliser l'insertion (un nombre entre 0 et 27).
      */
     public void insertionPieceLibre(int choixEntree){
-        // A ComplÃ©ter
+        if(choixEntree >= 0 && choixEntree <= 6) {
+
+            Piece pieceLibreTmp = this.pieceLibre;
+            this.pieceLibre = plateau.getPiece(6, choixEntree);
+
+            for(int i=6; i>0; i--) {
+                Piece piece = plateau.getPiece(i-1, choixEntree);
+                plateau.positionnePiece(piece, i, choixEntree);
+            }
+            plateau.positionnePiece(pieceLibreTmp, 0, choixEntree);
+
+        } else if(choixEntree >= 7 && choixEntree <= 13) {
+
+            Piece pieceLibreTmp = this.pieceLibre;
+            this.pieceLibre = plateau.getPiece(choixEntree % 7, 0);
+
+            for(int i=0; i<6; i++) {
+                Piece piece = plateau.getPiece(choixEntree % 7, i+1);
+                plateau.positionnePiece(piece, choixEntree % 7, i);
+            }
+            plateau.positionnePiece(pieceLibreTmp, choixEntree % 7, 6);
+
+        } else if(choixEntree >= 14 && choixEntree <= 20) {
+
+            Piece pieceLibreTmp = this.pieceLibre;
+            this.pieceLibre = plateau.getPiece(0, choixEntree % 7);
+            // inverser
+
+        } else if(choixEntree >= 21 && choixEntree <= 27) {
+            // inverser
+        }
     }
 
 

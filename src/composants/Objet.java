@@ -1,7 +1,5 @@
 package composants;
 
-import java.util.Arrays;
-
 /**
  *
  * Cette classe permet de representer chacun des objets du jeu.
