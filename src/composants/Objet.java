@@ -1,5 +1,7 @@
 package composants;
 
+import grafix.interfaceGraphique.IG;
+
 /**
  *
  * Cette classe permet de representer chacun des objets du jeu.

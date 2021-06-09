@@ -63,7 +63,7 @@ public class TestElementsPartie {
         };
         IG.afficherMessage(message);
         IG.miseAJourAffichage();
-        for(int i=0; i<20; i++) {
+        for(int i=0; i<4; i++) {
             elementsPartie.insertionPieceLibre(IG.attendreChoixEntree());
             for(int x=0; x<7; x++) {
                 for(int j=0; j<7; j++) {

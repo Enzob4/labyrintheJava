@@ -64,7 +64,7 @@ public class ElementsPartie {
      * MÃ©thode permettant d'attribuer les objets aux diffÃ©rents joueurs de maniÃ¨re alÃ©atoire.
      */
     private void attribuerObjetsAuxJoueurs(){
-        Objet[] objets = Objet.nouveauxObjets();
+        Objet[] objets = this.objets.clone();
         if(nombreJoueurs == 2) {
             Objet[] objetsJ1 = new Objet[9];
             Objet[] objetsJ2 = new Objet[9];
@@ -371,6 +371,7 @@ public class ElementsPartie {
 
     private Objet getObjetSur(int l, int c) {
         for(Objet o : objets) {
+            if(!o.surPlateau()) return null;
             if(o.getPosLignePlateau() == l && o.getPosColonnePlateau() == c) {
                 return o;
             }
