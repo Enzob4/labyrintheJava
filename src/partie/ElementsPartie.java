@@ -4,6 +4,7 @@ import composants.Objet;
 import composants.Piece;
 import composants.Plateau;
 import composants.Utils;
+import grafix.interfaceGraphique.IG;
 import joueurs.Joueur;
 
 /**
@@ -181,37 +182,200 @@ public class ElementsPartie {
      * @param choixEntree L'entrÃ©e choisie pour rÃ©aliser l'insertion (un nombre entre 0 et 27).
      */
     public void insertionPieceLibre(int choixEntree){
+        Piece pieceLibreTmp = this.pieceLibre;
+        pieceLibreTmp.setOrientation(IG.recupererOrientationPieceHorsPlateau());
         if(choixEntree >= 0 && choixEntree <= 6) {
 
-            Piece pieceLibreTmp = this.pieceLibre;
             this.pieceLibre = plateau.getPiece(6, choixEntree);
-
             for(int i=6; i>0; i--) {
                 Piece piece = plateau.getPiece(i-1, choixEntree);
                 plateau.positionnePiece(piece, i, choixEntree);
             }
             plateau.positionnePiece(pieceLibreTmp, 0, choixEntree);
 
+            // OBJETS
+
+            Objet[] objets = new Objet[7];
+
+            for(int i=0; i<7; i++) {
+                if(getObjetSur(i, choixEntree) != null) {
+                    objets[i] = getObjetSur(i, choixEntree);
+                    IG.enleverObjetPlateau(i, choixEntree);
+                }
+            }
+            for(int i=0; i<7; i++) {
+                Objet objet = objets[i];
+                if(objet != null) {
+                    if(objet.getPosLignePlateau() == 6) {
+                        objet.positionneObjet(0, objet.getPosColonnePlateau());
+                        IG.placerObjetPlateau(objet.getNumeroObjet(), 0, objet.getPosColonnePlateau());
+                    } else {
+                        objet.positionneObjet(objet.getPosLignePlateau()+1, objet.getPosColonnePlateau());
+                        IG.placerObjetPlateau(objet.getNumeroObjet(), objet.getPosLignePlateau(), objet.getPosColonnePlateau());
+                    }
+                }
+            }
+
+            // JOUEURS
+
+            for(Joueur j : joueurs) {
+                if(j.getPosColonne() == choixEntree) {
+                    if(j.getPosLigne() == 6){
+                        j.setPosition(0, choixEntree);
+                    } else {
+                        j.setPosition(j.getPosLigne()+1, choixEntree);
+                    }
+                    IG.placerJoueurSurPlateau(j.getNumJoueur(), j.getPosLigne(), j.getPosColonne());
+                }
+            }
+
+
         } else if(choixEntree >= 7 && choixEntree <= 13) {
 
-            Piece pieceLibreTmp = this.pieceLibre;
-            this.pieceLibre = plateau.getPiece(choixEntree % 7, 0);
+            choixEntree %= 7;
 
+            this.pieceLibre = plateau.getPiece(choixEntree, 0);
             for(int i=0; i<6; i++) {
-                Piece piece = plateau.getPiece(choixEntree % 7, i+1);
-                plateau.positionnePiece(piece, choixEntree % 7, i);
+                Piece piece = plateau.getPiece(choixEntree, i+1);
+                plateau.positionnePiece(piece, choixEntree, i);
             }
-            plateau.positionnePiece(pieceLibreTmp, choixEntree % 7, 6);
+            plateau.positionnePiece(pieceLibreTmp, choixEntree, 6);
+
+            // OBJETS
+
+            Objet[] objets = new Objet[7];
+
+            for(int i=0; i<7; i++) {
+                if(getObjetSur(choixEntree, i) != null) {
+                    objets[i] = getObjetSur(choixEntree, i);
+                    IG.enleverObjetPlateau(choixEntree, i);
+                }
+            }
+            for(int i=0; i<7; i++) {
+                Objet objet = objets[i];
+                if(objet != null) {
+                    if(objet.getPosColonnePlateau() == 0) {
+                        objet.positionneObjet(choixEntree, 6);
+                        IG.placerObjetPlateau(objet.getNumeroObjet(), objet.getPosLignePlateau(), objet.getPosColonnePlateau());
+                    } else {
+                        objet.positionneObjet(objet.getPosLignePlateau(), objet.getPosColonnePlateau()-1);
+                        IG.placerObjetPlateau(objet.getNumeroObjet(), objet.getPosLignePlateau(), objet.getPosColonnePlateau());
+                    }
+                }
+            }
+            // JOUEURS
+
+            for(Joueur j : joueurs) {
+                if(j.getPosLigne() == choixEntree) {
+                    if(j.getPosColonne() == 0){
+                        j.setPosition(choixEntree, 6);
+                    } else {
+                        j.setPosition(choixEntree, j.getPosColonne()-1);
+                    }
+                    IG.placerJoueurSurPlateau(j.getNumJoueur(), j.getPosLigne(), j.getPosColonne());
+                }
+            }
 
         } else if(choixEntree >= 14 && choixEntree <= 20) {
+            choixEntree -= 20;
+            choixEntree = -choixEntree;
+            this.pieceLibre = plateau.getPiece(0, choixEntree);
 
-            Piece pieceLibreTmp = this.pieceLibre;
-            this.pieceLibre = plateau.getPiece(0, choixEntree % 7);
-            // inverser
+            for(int i=0; i<6; i++) {
+                Piece piece = plateau.getPiece(i+1, choixEntree);
+                plateau.positionnePiece(piece, i, choixEntree);
+            }
+            plateau.positionnePiece(pieceLibreTmp, 6, choixEntree);
+
+            // OBJETS
+
+            Objet[] objets = new Objet[7];
+
+            for(int i=0; i<7; i++) {
+                if(getObjetSur(i, choixEntree) != null) {
+                    objets[i] = getObjetSur(i, choixEntree);
+                    IG.enleverObjetPlateau(i, choixEntree);
+                }
+            }
+            for(int i=0; i<7; i++) {
+                Objet objet = objets[i];
+                if(objet != null) {
+                    if(objet.getPosLignePlateau() == 0) {
+                        objet.positionneObjet(6, objet.getPosColonnePlateau());
+                        IG.placerObjetPlateau(objet.getNumeroObjet(), 6, objet.getPosColonnePlateau());
+                    } else {
+                        objet.positionneObjet(objet.getPosLignePlateau()-1, objet.getPosColonnePlateau());
+                        IG.placerObjetPlateau(objet.getNumeroObjet(), objet.getPosLignePlateau(), objet.getPosColonnePlateau());
+                    }
+                }
+            }
+            // JOUEURS
+            for(Joueur j : joueurs) {
+                if(j.getPosColonne() == choixEntree) {
+                    if(j.getPosLigne() == 0){
+                        j.setPosition(6, choixEntree);
+                    } else {
+                        j.setPosition(j.getPosLigne()-1, choixEntree);
+                    }
+                    IG.placerJoueurSurPlateau(j.getNumJoueur(), j.getPosLigne(), j.getPosColonne());
+                }
+            }
 
         } else if(choixEntree >= 21 && choixEntree <= 27) {
-            // inverser
+            choixEntree -= 27;
+            choixEntree = -choixEntree;
+            this.pieceLibre = plateau.getPiece(choixEntree, 6);
+
+            for(int i=6; i>0; i--) {
+                Piece piece = plateau.getPiece(choixEntree, i-1);
+                plateau.positionnePiece(piece, choixEntree, i);
+            }
+            plateau.positionnePiece(pieceLibreTmp, choixEntree, 0);
+
+            // OBJETS
+
+            Objet[] objets = new Objet[7];
+
+            for(int i=0; i<7; i++) {
+                if(getObjetSur(choixEntree, i) != null) {
+                    objets[i] = getObjetSur(choixEntree, i);
+                    IG.enleverObjetPlateau(choixEntree, i);
+                }
+            }
+            for(int i=0; i<7; i++) {
+                Objet objet = objets[i];
+                if(objet != null) {
+                    if(objet.getPosColonnePlateau() == 6) {
+                        objet.positionneObjet(choixEntree, 0);
+                        IG.placerObjetPlateau(objet.getNumeroObjet(), objet.getPosLignePlateau(), objet.getPosColonnePlateau());
+                    } else {
+                        objet.positionneObjet(objet.getPosLignePlateau(), objet.getPosColonnePlateau()+1);
+                        IG.placerObjetPlateau(objet.getNumeroObjet(), objet.getPosLignePlateau(), objet.getPosColonnePlateau());
+                    }
+                }
+            }
+            // JOUEURS
+
+            for(Joueur j : joueurs) {
+                if(j.getPosLigne() == choixEntree) {
+                    if(j.getPosColonne() == 6){
+                        j.setPosition(choixEntree, 0);
+                    } else {
+                        j.setPosition(choixEntree, j.getPosColonne()+1);
+                    }
+                    IG.placerJoueurSurPlateau(j.getNumJoueur(), j.getPosLigne(), j.getPosColonne());
+                }
+            }
         }
+    }
+
+    private Objet getObjetSur(int l, int c) {
+        for(Objet o : objets) {
+            if(o.getPosLignePlateau() == l && o.getPosColonnePlateau() == c) {
+                return o;
+            }
+        }
+        return null;
     }
 
 
@@ -232,6 +396,4 @@ public class ElementsPartie {
         ElementsPartie nouveauxElements=new  ElementsPartie(nouveauxJoueurs,nouveauxObjets,nouveauPlateau,nouvellePieceLibre);
         return nouveauxElements;
     }
-
-
 }
