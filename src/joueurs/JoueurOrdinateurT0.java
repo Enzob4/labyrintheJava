@@ -32,6 +32,14 @@ public class JoueurOrdinateurT0 extends JoueurOrdinateur {
     }
 
     @Override
+    public int[] choisirOrientationEntree(ElementsPartie elementsPartie) {
+        int[] res = new int[2];
+        res[1] = Utils.genererEntier(28);
+        res[0] = 1;
+        return res;
+    }
+
+    @Override
     public String getCategorie() {
         return "OrdiType0";
     }

@@ -101,7 +101,6 @@ public class Partie {
         while(true) {
             for(Joueur joueur : joueurs) {
                 Objet oj = joueur.getProchainObjet();
-                System.out.println(oj.getPosLignePlateau() + " " + oj.getPosColonnePlateau());
                 message = new String[]{
                         "Au tour de "+ joueur.getNomJoueur()+" !",
                         "",
@@ -111,7 +110,12 @@ public class Partie {
                 };
                 IG.afficherMessage(message);
                 IG.miseAJourAffichage();
-                elementsPartie.insertionPieceLibre(IG.attendreChoixEntree());
+                int[] choix = joueur.choisirOrientationEntree(elementsPartie);
+                Piece pieceLibre = this.elementsPartie.getPieceLibre();
+                pieceLibre.setOrientation(choix[0]);
+                IG.changerPieceHorsPlateau(pieceLibre.getModelePiece(), pieceLibre.getOrientationPiece());
+                IG.miseAJourAffichage();
+                elementsPartie.insertionPieceLibre(choix[1]);
                 for(int i=0; i<7; i++) {
                     for(int j=0; j<7; j++) {
                         Piece piece = elementsPartie.getPlateau().getPiece(i, j);
@@ -127,6 +131,7 @@ public class Partie {
                 };
                 IG.afficherMessage(message);
                 IG.miseAJourAffichage();
+
                 int[] caseArrivee = joueur.choisirCaseArrivee(null);
                 while(elementsPartie.getPlateau().calculeChemin(joueur.getPosLigne(), joueur.getPosColonne(), caseArrivee[0], caseArrivee[1]) == null)
                     caseArrivee = joueur.choisirCaseArrivee(null);
@@ -146,6 +151,7 @@ public class Partie {
                     }
                 }
                 IG.attendreClic();
+
                 for(int[] cases : elementsPartie.getPlateau().calculeChemin(joueur.getPosLigne(), joueur.getPosColonne(), caseArrivee[0], caseArrivee[1]))
                    IG.supprimerBilleSurPlateau(cases[0], cases[1], 1, 1);
                 joueur.setPosition(caseArrivee[0], caseArrivee[1]);

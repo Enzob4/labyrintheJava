@@ -40,7 +40,7 @@ public abstract class JoueurOrdinateur extends Joueur {
     public int[] choisirOrientationEntree(ElementsPartie elementsPartie) {
         int resultat[]=new int[2];
         resultat[1]=3;
-        resultat[0]=IG.recupererOrientationPieceHorsPlateau();
+        resultat[0]=elementsPartie.getPieceLibre().getOrientationPiece();
         return resultat;
     }
 
