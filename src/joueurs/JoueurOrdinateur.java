@@ -55,9 +55,4 @@ public abstract class JoueurOrdinateur extends Joueur {
         resultat[1]=this.getPosColonne();
         return resultat;
     }
-
-
-
-
-
 }

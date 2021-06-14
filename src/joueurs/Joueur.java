@@ -174,6 +174,7 @@ public abstract class Joueur {
      * @return Le prochain objet Ã  rÃ©cupÃ©rer par le joueur.
      */
     public Objet getProchainObjet(){
+        if(nombreObjetsRecuperes == objetsJoueur.length) return null;
         return objetsJoueur[nombreObjetsRecuperes];
     }
 

@@ -34,9 +34,27 @@ public class JoueurOrdinateurT0 extends JoueurOrdinateur {
     @Override
     public int[] choisirOrientationEntree(ElementsPartie elementsPartie) {
         int[] res = new int[2];
+        res[0] = Utils.genererEntier(3);
         res[1] = Utils.genererEntier(28);
-        res[0] = 1;
         return res;
+    }
+
+    @Override
+    public int[] choisirCaseArrivee(ElementsPartie elementsPartie) {
+        Plateau p = elementsPartie.getPlateau();
+        int[][] cases = new int[49][2];
+        int nbCases = 0;
+        for(int i=0; i<7; i++) {
+            for(int j=0; j<7; j++) {
+                int[][] chemin = p.calculeChemin(this.getPosLigne(), this.getPosColonne(), i, j);
+                if(chemin != null) {
+                    cases[nbCases] = new int[]{i, j};
+                    nbCases++;
+                }
+            }
+        }
+        if(nbCases > 0) return cases[Utils.genererEntier(nbCases-1)];
+        return super.choisirCaseArrivee(elementsPartie);
     }
 
     @Override

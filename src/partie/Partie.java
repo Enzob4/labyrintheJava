@@ -70,7 +70,7 @@ public class Partie {
         for(int i=0; i<elementsPartie.getNombreJoueurs(); i++) {
             Joueur joueur = joueurs[i];
             Objet[] objets = joueur.getObjetsJoueur();
-            IG.changerNomJoueur(joueur.getNumJoueur(), joueur.getNomJoueur());
+            IG.changerNomJoueur(joueur.getNumJoueur(), joueur.getNomJoueur() + " ("+joueur.getCategorie()+")");
             IG.changerImageJoueur(joueur.getNumJoueur(), joueur.getNumeroImagePersonnage());
             for(int j=0; j<objets.length; j++) {
                 IG.changerObjetJoueur(joueur.getNumJoueur(), objets[j].getNumeroObjet(), j);
@@ -132,9 +132,9 @@ public class Partie {
                 IG.afficherMessage(message);
                 IG.miseAJourAffichage();
 
-                int[] caseArrivee = joueur.choisirCaseArrivee(null);
+                int[] caseArrivee = joueur.choisirCaseArrivee(elementsPartie);
                 while(elementsPartie.getPlateau().calculeChemin(joueur.getPosLigne(), joueur.getPosColonne(), caseArrivee[0], caseArrivee[1]) == null)
-                    caseArrivee = joueur.choisirCaseArrivee(null);
+                    caseArrivee = joueur.choisirCaseArrivee(elementsPartie);
                 IG.placerJoueurSurPlateau(joueur.getNumJoueur(), caseArrivee[0], caseArrivee[1]);
                 for(int[] cases : elementsPartie.getPlateau().calculeChemin(joueur.getPosLigne(), joueur.getPosColonne(), caseArrivee[0], caseArrivee[1]))
                     IG.placerBilleSurPlateau(cases[0], cases[1], 1, 1, joueur.getNumJoueur());
@@ -148,10 +148,12 @@ public class Partie {
                     IG.miseAJourAffichage();
                     if(joueur.getNombreObjetsRecuperes() == 18 / elementsPartie.getNombreJoueurs()) {
                         IG.afficherGagnant(joueur.getNumJoueur());
+                        IG.miseAJourAffichage();
+                        IG.attendreClic();
+                        IG.fermerFenetreJeu();
+                        System.exit(0);
                     }
                 }
-                IG.attendreClic();
-
                 for(int[] cases : elementsPartie.getPlateau().calculeChemin(joueur.getPosLigne(), joueur.getPosColonne(), caseArrivee[0], caseArrivee[1]))
                    IG.supprimerBilleSurPlateau(cases[0], cases[1], 1, 1);
                 joueur.setPosition(caseArrivee[0], caseArrivee[1]);

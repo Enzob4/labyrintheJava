@@ -1,6 +1,7 @@
 package composants;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Cette classe permet de gÃ©rer un plateau de jeu constituÃ© d'une grille de piÃ¨ces (grille de 7 lignes sur 7 colonnes).
@@ -148,11 +149,13 @@ public class Plateau {
      */
     public int[][] calculeChemin(int posLigCaseDep,int posColCaseDep,int posLigCaseArr,int posColCaseArr){
         int[][] resultat = new int[49][2];
+        int[][] visited = new int[49][2];
         Piece piece = getPiece(posLigCaseDep, posColCaseDep);
+        visited[0] = new int[]{posLigCaseDep, posColCaseDep};
         Piece pieceArr = getPiece(posLigCaseArr, posColCaseArr);
 
         int posLig = posLigCaseDep;
-        int posCol= posColCaseDep;
+        int posCol = posColCaseDep;
         Piece lastPiece = getPiece(posLig, posCol);
         int nbCase = 0;
         if(piece == pieceArr) {
@@ -163,20 +166,23 @@ public class Plateau {
         }
         while(piece != pieceArr) {
 
-            if(passageEntreCases(posLig, posCol, posLig-1, posCol) && lastPiece != getPiece(posLig-1, posCol)){
+            if(passageEntreCases(posLig, posCol, posLig-1, posCol) && !isIn(posLig-1, posCol, visited) ){
                 lastPiece = getPiece(posLig, posCol);
+                visited[nbCase] = new int[]{posLig, posCol};
                 posLig--;
-
-            } else if(passageEntreCases(posLig, posCol, posLig, posCol+1) && lastPiece != getPiece(posLig, posCol+1)) {
+            } else if(passageEntreCases(posLig, posCol, posLig, posCol+1) && !isIn(posLig, posCol+1, visited)) {
                 lastPiece = getPiece(posLig, posCol);
+                visited[nbCase] = new int[]{posLig, posCol};
                 posCol++;
 
-            } else if(passageEntreCases(posLig, posCol, posLig+1, posCol) && lastPiece != getPiece(posLig+1, posCol)) {
+            } else if(passageEntreCases(posLig, posCol, posLig+1, posCol) && !isIn(posLig+1, posCol, visited)) {
                 lastPiece = getPiece(posLig, posCol);
+                visited[nbCase] = new int[]{posLig, posCol};
                 posLig++;
 
-            } else if(passageEntreCases(posLig, posCol, posLig, posCol-1) && lastPiece != getPiece(posLig, posCol-1)) {
+            } else if(passageEntreCases(posLig, posCol, posLig, posCol-1) && !isIn(posLig, posCol-1, visited)) {
                 lastPiece = getPiece(posLig, posCol);
+                visited[nbCase] = new int[]{posLig, posCol};
                 posCol--;
 
             } else {
@@ -189,6 +195,16 @@ public class Plateau {
         int[][] res = new int[nbCase][2];
         System.arraycopy(resultat, 0, res, 0, nbCase);
         return res;
+
+    }
+
+    private boolean isIn(int posL, int posC, int[][] visited) {
+        for(int[] posCase : visited) {
+            if(posCase[0] == posL && posCase[1] == posC) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

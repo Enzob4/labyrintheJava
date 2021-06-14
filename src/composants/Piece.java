@@ -1,5 +1,8 @@
 package composants;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 /**
  *
  * Cette classe permet de représenter les différentes pièces du jeu.
@@ -151,6 +154,13 @@ abstract public class Piece {
             pieces[i].setOrientation(Utils.genererEntier(3));
         }
         return pieces;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(modelePiece, orientationPiece);
+        result = 31 * result + Arrays.hashCode(pointsEntree);
+        return result;
     }
 
     /**
