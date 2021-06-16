@@ -154,6 +154,7 @@ public class Partie {
                         System.exit(0);
                     }
                 }
+                IG.attendreClic();
                 for(int[] cases : elementsPartie.getPlateau().calculeChemin(joueur.getPosLigne(), joueur.getPosColonne(), caseArrivee[0], caseArrivee[1]))
                    IG.supprimerBilleSurPlateau(cases[0], cases[1], 1, 1);
                 joueur.setPosition(caseArrivee[0], caseArrivee[1]);
